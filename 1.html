@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+      <div id="heatmapCon" class="hidden to-hide card mdl-shadow--2dp mdl-cell mdl-cell--8-col mdl-cell--11-col-desktop">
+                    <div id="heatmapTitle">Submissions HeatMap of <span id="heatMapHandle"></span></div>
+                    <div class="mdl-textfield mdl-js-textfield heatmap-text">
+                        <input type="number" class="mdl-textfield__input heatmap-text" min="0" max="999" id="heatmapMaxValue">
+                        <label class="mdl-textfield__label heatmap-text" for="heatmapMaxValue">Set Maximum</label>
+                        <span class="mdl-textfield__error heatmap-text">Number is out of range!</span>
+                    </div>
+                    <span class="mdl-tooltip mdl-tooltip--right" for="heatmapMaxValue">Change maximum value of daily submissions.</span>
+                    <div class="to-clear" id="heatmapDiv"></div>
+                </div>
+                <div class="share-div to-hide mdl-cell mdl-cell--12-col">
+                    <a class="hidden sharethis" href="javascript:fbShareResult()">share result</a>
+                    <div class="vertical-space"></div>
+                    <div class="fb-like fb-recommend" data-width="200" data-href="https://cfviz.netlify.com" data-layout="standard" data-action="recommend" data-size="large" data-show-faces="true" data-share="false"></div>
+                    <div class="vertical-space"></div>
+                    <!-- <a class="github-button" href="https://github.com/sjsakib/cfviz" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star sjsakib/cfviz on GitHub">Star</a>
+                    <div class="vertical-space"></div> -->
+                    <!-- <p> <a href="https://facebook.com/sjsakib">sjsakib</a></p>-->
+</body>
+</html>

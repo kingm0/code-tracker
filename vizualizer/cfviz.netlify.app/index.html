@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html prefix="og: http://ogp.me/ns#">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="Codeforces Visualizer. Visualize, analyze and compare codeforces user profiles. Compare max/min rating, number of contests participated, max positive rating change, max negative rating change, best position in contest, worst position in contest, number of total solved problem, levels of solved problems, category or tags of solved problems and many more. Know how many problems someone solved and lot more">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>CodeTracker Visualizer</title>
+    <!-- Open Graph meta -->
+    <meta property="og:url" content="https://cfviz.netlify.com" />
+    <meta property="og:title" content="Codeforces Visualizer" />
+    <meta property="og:description" content="Visually analyze and compare codeforces user profiles" />
+    <meta property="og:image" content="https://cfviz.netlify.com/images/og.jpg" />
+    <meta property="fb:app_id" content="1843052242620434" />
+    <!-- PWA requirements -->
+    <meta name="theme-color" content="#000000" />
+    <link rel="manifest" href="manifest.json" />
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
+  />
+  <link
+    href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css"
+    rel="stylesheet"
+  />container
+  <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="shortcut icon" href="images/favicon.png">
+
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons&display=swap">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.cyan-light_blue.min.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="js/single.js"></script>
+</head>
+
+<body>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <div id="fb-root"></div>
+    <div class="layout mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="header mdl-layout__header mdl-color--grey-100 mdl-color-text--black-600">
+            <div class="mdl-layout__header-row">
+                <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 fixed-top">
+                    <div class="container">
+                      <a href="../../index.html" class="navbar-brand fs-3">CodeTracker</a>
+              
+                      <button
+                        class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navmenu"
+                      >
+                        <span class="navbar-toggler-icon"></span>
+                      </button>
+              
+                      <div class="collapse navbar-collapse" id="navmenu">
+                        <ul class="navbar-nav ms-auto fs-4">
+                          <li class="nav-item">
+                            <a href="#learn1" class="nav-link">Dashboard</a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#instructors" class="nav-link">Leaderboard</a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#instructors" class="nav-link">Discuss</a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="https://codeforces.com/top" class="nav-link">Blogs</a>
+                          </li>
+                          <li class="nav-item">
+                            <a href="#instructors" class="nav-link">My profile</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </nav>
+              
+        </div>
+        <main class="mdl-layout__content mdl-color--grey-100">
+            <div id="mainSpinner" class="mdl-spinner mdl-js-spinner"></div>
+            <div class="mdl-grid content">
+                <div class="handle-card mdl-color--white mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+                    <form action="" id="handleform">
+                        <div class="hidden mdl-textfield mdl-js-textfield" id="handleDiv">
+                            <input type="text" class="mdl-textfield__input" name="handle" id="handle">
+                            <label class="mdl-textfield__label" for="handle">Codeforces User Handle</label>
+                            <span id="handleDivErr" class="mdl-textfield__error">Couldn't find user. Network problem?</span>
+                        </div>
+                    </form>
+                </div>
+                <div id="verdicts" class="hidden to-clear to-hide card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--6-col-desktop">
+                </div>
+                <div id="langs" class="hidden to-clear to-hide card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--6-col-desktop">
+                </div>
+                <div id="tags" class="hidden to-clear to-hide card mdl-shadow--2dp mdl-cell mdl-cell--8-col mdl-cell--8-col-desktop">
+                </div>
+                <div id="levels" class="hidden to-clear to-hide card mdl-shadow--2dp mdl-cell mdl-cell--8-col mdl-cell--10-col-desktop">
+                </div>
+                <span class="mdl-tooltip" for="levels">Indexes in contests of the problems they have solved. All subindexes like A1, A2 have been merged</span>
+                <div id="ratings" class="hidden to-clear to-hide card mdl-shadow--2dp mdl-cell mdl-cell--8-col mdl-cell--10-col-desktop">
+                </div>
+                <span class="mdl-tooltip" for="ratings">Ratings of the problems they have solved. Problems without ratings are ignored</span>
+                <div id='numbers' class="hidden to-hide card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--6-col-desktop">
+                    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+                        <thead>
+                            <tr class="mdl-color--teal-300">
+                                <th class="mdl-data-table__cell--non-numeric">Some numbers about</th>
+                                <th class="handle-text"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Tried</td>
+                                <td id="tried"></td>
+                            </tr>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Solved</td>
+                                <td id="solved"></td>
+                                <span class="mdl-tooltip" for="solved">Problems appearing on both div 1 and div 2 may get counted twice for div 2 users</span>
+                            </tr>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Average attempts</td>
+                                <td id="averageAttempt"></td>
+                                <span class="mdl-tooltip" for="averageAttempt">Average submissions they had to make to solve a single problem</span>
+                            </tr>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Max attempts</td>
+                                <td id="maxAttempt"></td>
+                                <span class="mdl-tooltip" for="maxAttempt">Maximum submissions they had to make to solve a single problem</span>
+                            </tr>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Solved with one submission</td>
+                                <td id="solvedWithOneSub"></td>
+                                <span class="mdl-tooltip" for="solvedWithOneSub">Number of problems they solved with just one submission</span>
+                            </tr>
+                            <tr>
+                                <td class="mdl-data-table__cell--non-numeric">Max AC(s)</td>
+                                <td id="maxAc"></td>
+                                <span class="mdl-tooltip" for="maxAc">Number of AC verdicts they got for a single problem. (It indicates in how many ways someone solved a problem) </span>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="contests" class="hidden to-hide card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--6-col-desktop bg-dark">
+                    <table class="mdl-data-table mdl-js-data-table">
+                        <tr class="bg-dark">
+                            <th class="mdl-data-table__cell--non-numeric">Contests of</th>
+                            <th class="handle-text"></th>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Number of contests</td>
+                            <td id="contestCount"></td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Best rank</td>
+                            <td id="best"></td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Worst rank</td>
+                            <td id="worst"></td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Max up</td>
+                            <td id="maxUp"></td>
+                        </tr>
+                        <tr>
+                            <td class="mdl-data-table__cell--non-numeric">Max down</td>
+                            <td id="maxDown"></td>
+                        </tr>
+                    </table>
+                </div>
+                <div id="unsolvedCon" class="hidden to-hide card mdl-shadow--2dp mdl-cell mdl-cell--8-col">
+                    <span id="unsolvedTitle">Unsolved</span>
+                    <div class="vertical-space"></div>
+                    <div class="to-clear" id="unsolvedList"></div>
+                </div>
+                <!-- <div id="heatmapCon" class="hidden to-hide card mdl-shadow--2dp mdl-cell mdl-cell--8-col mdl-cell--11-col-desktop">
+                    <div id="heatmapTitle">Submissions HeatMap of <span id="heatMapHandle"></span></div>
+                    <div class="mdl-textfield mdl-js-textfield heatmap-text">
+                        <input type="number" class="mdl-textfield__input heatmap-text" min="0" max="999" id="heatmapMaxValue">
+                        <label class="mdl-textfield__label heatmap-text" for="heatmapMaxValue">Set Maximum</label>
+                        <span class="mdl-textfield__error heatmap-text">Number is out of range!</span>
+                    </div>
+                    <span class="mdl-tooltip mdl-tooltip--right" for="heatmapMaxValue">Change maximum value of daily submissions.</span>
+                    <div class="to-clear" id="heatmapDiv"></div>
+                </div>
+                <div class="share-div to-hide mdl-cell mdl-cell--12-col">
+                    <a class="hidden sharethis" href="javascript:fbShareResult()">share result</a>
+                    <div class="vertical-space"></div>
+                    <div class="fb-like fb-recommend" data-width="200" data-href="https://cfviz.netlify.com" data-layout="standard" data-action="recommend" data-size="large" data-show-faces="true" data-share="false"></div>
+                    <div class="vertical-space"></div> -->
+                    <!-- <a class="github-button" href="https://github.com/sjsakib/cfviz" data-icon="octicon-star" data-size="large" data-show-count="true" aria-label="Star sjsakib/cfviz on GitHub">Star</a>
+                    <div class="vertical-space"></div> -->
+                    <!-- <p> <a href="https://facebook.com/sjsakib">sjsakib</a></p>-->
+                <!-- </div> -->
+            <p>                    </p>
+            </div>
+            <div class="test">   <a href="https://6546fcbb17130a7ac8ac7c82--moonlit-arithmetic-e0aa58.netlify.app/index4" class="btn btn-primary mb-3 d-md-flex" >Suggested Problem</a>  </div>
+            
+        </main>
+    </div>
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId: '1843052242620434',
+                xfbml: true,
+                version: 'v2.8'
+            });
+            FB.AppEvents.logPageView();
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {
+                return;
+            }
+            js = d.createElement(s);
+            js.id = id;
+            js.src = "//connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <script>
+        (function(i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function() {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-90813960-1', 'auto');
+        ga('send', 'pageview');
+        ga('send', 'event', 'Form', 'submit');
+    </script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+        }
+    </script>
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+          <!-- Footer -->
+          <footer class="p-5 bg-dark text-white text-center position-relative footboot">
+            <div class="container">
+              <p class="lead">Copyright &copy; SPAM community</p>
+      
+              <a href="#" class="position-absolute bottom-0 end-0 p-5">
+                <i class="bi bi-arrow-up-circle h1"></i>
+              </a>
+            </div>
+          </footer>
+</body>
+
+</html>

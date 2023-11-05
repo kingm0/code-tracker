@@ -1,0 +1,1 @@
+chrome-extension://mnojpmjdmbbfmejpflffifhffcmidifd/bundles/web-discovery-content-script.bundle.js
